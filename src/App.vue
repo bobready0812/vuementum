@@ -12,9 +12,12 @@
  />
 </form>
 <h1 id="greeting" v-bind:class="{ hide : isHidden}"> {{id}} </h1>
+<h1> {{quote}} </h1>
+<h1> {{author}} </h1>
 </template>
 
 <script>
+import quoteData from "./data/quoteData"
 
 
 export default {
@@ -27,6 +30,8 @@ export default {
      id:"",
      isHidden:true,
      isHidden2:false,
+     quote:"",
+     author:"",
     }
   },
   methods:{
@@ -41,7 +46,11 @@ export default {
     a.preventDefault();
     this.isHidden = false;
     this.isHidden2 = true;
+    },
+    getQuote() {
+      
     }
+   
 
   },
   mounted () {
