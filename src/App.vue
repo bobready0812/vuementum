@@ -2,7 +2,7 @@
 <div class="clock">
  <h1> {{hours}} : {{minutes}} : {{seconds}} </h1>
 </div>
-<form @submit="onLoginSubmit">
+<form @submit="onLoginSubmit" v-bind:class="{ hide : isHidden2}">
  <input 
  required
  maxlength="15"
@@ -11,7 +11,7 @@
  v-model="id"
  />
 </form>
-<h1 id="greeting" class="hidden"> {{id}} </h1>
+<h1 id="greeting" v-bind:class="{ hide : isHidden}"> {{id}} </h1>
 </template>
 
 <script>
@@ -25,6 +25,8 @@ export default {
      minutes:"00",
      seconds:"00",
      id:"",
+     isHidden:true,
+     isHidden2:false,
     }
   },
   methods:{
@@ -37,8 +39,8 @@ export default {
     },
     onLoginSubmit(a) {
     a.preventDefault();
-    
-    
+    this.isHidden = false;
+    this.isHidden2 = true;
     }
 
   },
@@ -53,6 +55,10 @@ export default {
 </script>
 
 <style>
+
+.hide {
+  display: none;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
