@@ -1,17 +1,7 @@
 <template>
-<div class="menu">
-  <a v-for="작명 in menus" :key="작명">{{작명}}</a>
+<div class="clock">
+ <h1> {{hours}} : {{minutes}} : {{seconds}} </h1>
 </div>
-
-  <div>
-    원룸샵
-    <h4> XX 원룸 </h4>
-    <p> {{ price1 }} 만원 </p>
-  </div>
-   <div>
-    <h4> XX 원룸 </h4>
-    <p> {{ price2 }} 만원 </p>
-  </div>
 </template>
 
 <script>
@@ -21,12 +11,25 @@ export default {
   name: 'App',
   data() {
     return {
-      price1 : 60,
-      price2 : 70,
-      menus : ['Home', 'Shop', 'About'],
-      products  : ['역삼동 원룸', '천호동 원룸', '마포구 원룸']
+     hours:"00",
+     minutes:"00",
+     seconds:"00",
     }
   },
+  methods:{
+    getClock(){
+      const date = new Date();
+      this.hours = String(date.getHours()).padStart(2,"0");
+      this.minutes = String(date.getMinutes()).padStart(2,"0");
+      this.seconds = String(date.getSeconds()).padStart(2,"0");
+      
+    }
+
+  },
+  mounted () {
+     setInterval(this.getClock,1000);
+  },
+  
   components: {
    
   }
