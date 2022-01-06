@@ -2,6 +2,16 @@
 <div class="clock">
  <h1> {{hours}} : {{minutes}} : {{seconds}} </h1>
 </div>
+<form @submit="onLoginSubmit">
+ <input 
+ required
+ maxlength="15"
+ type="text"
+ placeholder="What is your name?"
+ v-model="id"
+ />
+</form>
+<h1 id="greeting" class="hidden"> {{id}} </h1>
 </template>
 
 <script>
@@ -14,6 +24,7 @@ export default {
      hours:"00",
      minutes:"00",
      seconds:"00",
+     id:"",
     }
   },
   methods:{
@@ -23,6 +34,11 @@ export default {
       this.minutes = String(date.getMinutes()).padStart(2,"0");
       this.seconds = String(date.getSeconds()).padStart(2,"0");
       
+    },
+    onLoginSubmit(a) {
+    a.preventDefault();
+    
+    
     }
 
   },
