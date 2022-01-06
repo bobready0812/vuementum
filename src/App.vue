@@ -11,13 +11,13 @@
  v-model="id"
  />
 </form>
-<h1 id="greeting" v-bind:class="{ hide : isHidden}"> {{id}} </h1>
+<h1 id="greeting" v-bind:class="{ hide : isHidden}"> Hi! {{id}} </h1>
 <h1> {{quote}} </h1>
 <h1> {{author}} </h1>
 </template>
 
 <script>
-import quoteData from "./data/quoteData"
+// import quoteData from "./data/quoteData"
 
 
 export default {
