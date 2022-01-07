@@ -32,6 +32,7 @@ export default {
      isHidden2:false,
      quote:"",
      author:"",
+     savedUsername:"",
     }
   },
   methods:{
@@ -46,7 +47,12 @@ export default {
     a.preventDefault();
     this.isHidden = false;
     this.isHidden2 = true;
+    localStorage.setItem("username", this.id);
     },
+    getSavedUserName() {
+      this.savedUsername = localStorage.getItem("username");
+    },
+
     getQuote() {
       
     }
@@ -55,6 +61,16 @@ export default {
   },
   mounted () {
      setInterval(this.getClock,1000);
+     this.getSavedUserName(); 
+     if( this.savedUsername === null ) {
+       this.isHidden2 = false;
+       this.isHidden = true;
+       this.id = "";
+     } else {
+       this.isHidden = false;
+       this.isHidden2 = true;
+       this.id = this.savedUsername;
+     }
   },
   
   components: {
