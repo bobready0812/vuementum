@@ -14,10 +14,16 @@
 <h1 id="greeting" v-bind:class="{ hide : isHidden}"> Hi! {{id}} </h1>
 <h1> {{quote}} </h1>
 <h1> {{author}} </h1>
+<form>
+ <input class="to_do" required type="text" placeholder="Write To Do"/>
+</form>
+<ul>
+
+</ul>
 </template>
 
 <script>
-// import quoteData from "./data/quoteData"
+import quoteData from "./data/quoteData"
 
 
 export default {
@@ -33,6 +39,7 @@ export default {
      quote:"",
      author:"",
      savedUsername:"",
+     toDos:[],
     }
   },
   methods:{
@@ -54,10 +61,14 @@ export default {
     },
 
     getQuote() {
-      
-    }
-   
-
+      const todaysQuote = quoteData[Math.floor(Math.random() * quoteData.length)];
+      this.quote = todaysQuote.quote;
+      this.author = todaysQuote.Author;
+    },
+    saveToDos() {
+      localStorage.setItem("todos", this.toDos)
+    },
+    
   },
   mounted () {
      setInterval(this.getClock,1000);
@@ -71,6 +82,7 @@ export default {
        this.isHidden2 = true;
        this.id = this.savedUsername;
      }
+     this.getQuote();
   },
   
   components: {
