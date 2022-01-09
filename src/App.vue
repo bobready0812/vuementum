@@ -14,8 +14,8 @@
 <h1 id="greeting" v-bind:class="{ hide : isHidden}"> Hi! {{id}} </h1>
 <h1> {{quote}} </h1>
 <h1> {{author}} </h1>
-<form>
- <input class="to_do" required type="text" placeholder="Write To Do"/>
+<form @submit="handleToDoSubmit">
+ <input v-model="todo" class="to_do" required type="text" placeholder="Write To Do"/>
 </form>
 <ul>
 
@@ -39,7 +39,7 @@ export default {
      quote:"",
      author:"",
      savedUsername:"",
-     toDos:[],
+     todo:""
     }
   },
   methods:{
@@ -65,9 +65,15 @@ export default {
       this.quote = todaysQuote.quote;
       this.author = todaysQuote.Author;
     },
-    saveToDos() {
-      localStorage.setItem("todos", this.toDos)
+    handleToDoSubmit(event) {
+     event.preventDefault(); 
+     const newTodo = this.todo;
+     this.todo = "";
+     this.paintToDo(newTodo);
     },
+    paintToDo(newTodo) {
+     
+    }
     
   },
   mounted () {
