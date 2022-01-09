@@ -19,7 +19,8 @@
 </form>
 <ul>
   <li v-for="(todo,index) in todos" :key="index">
-    <span> {{todo.text}} </span>
+    <span> {{todo.text}} </span> 
+    <button>X</button> 
   </li>
 </ul>
 
@@ -79,6 +80,9 @@ export default {
       this.todos.push(todo);
       this.value = ""; 
      },
+     deleteTodo() {
+       
+     }
     
     
   },
