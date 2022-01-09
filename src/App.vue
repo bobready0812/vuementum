@@ -15,15 +15,19 @@
 <h1> {{quote}} </h1>
 <h1> {{author}} </h1>
 <form @submit="handleToDoSubmit">
- <input v-model="todo" class="to_do" required type="text" placeholder="Write To Do"/>
+ <input v-model="value" class="todo" required type="text" placeholder="Write To Do"/>
 </form>
 <ul>
-
+  <li v-for="(todo,index) in todos" :key="index">
+    <span> {{todo.text}} </span>
+  </li>
 </ul>
+
 </template>
 
 <script>
 import quoteData from "./data/quoteData"
+
 
 
 export default {
@@ -39,9 +43,11 @@ export default {
      quote:"",
      author:"",
      savedUsername:"",
-     todo:""
+     todos: [],
+     value:"",
     }
   },
+ 
   methods:{
     getClock(){
       const date = new Date();
@@ -49,7 +55,7 @@ export default {
       this.minutes = String(date.getMinutes()).padStart(2,"0");
       this.seconds = String(date.getSeconds()).padStart(2,"0");
       
-    },
+    } ,
     onLoginSubmit(a) {
     a.preventDefault();
     this.isHidden = false;
@@ -65,15 +71,15 @@ export default {
       this.quote = todaysQuote.quote;
       this.author = todaysQuote.Author;
     },
-    handleToDoSubmit(event) {
-     event.preventDefault(); 
-     const newTodo = this.todo;
-     this.todo = "";
-     this.paintToDo(newTodo);
-    },
-    paintToDo(newTodo) {
-     
-    }
+     handleToDoSubmit(e){
+       e.preventDefault();
+       const todo = {
+         text: this.value,
+       };
+      this.todos.push(todo);
+      this.value = ""; 
+     },
+    
     
   },
   mounted () {
@@ -102,6 +108,7 @@ export default {
 .hide {
   display: none;
 }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
