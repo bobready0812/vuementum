@@ -18,9 +18,10 @@
  <input v-model="value" class="todo" required type="text" placeholder="Write To Do"/>
 </form>
 <ul>
-  <li v-for="(todo,index) in todos" :key="index">
+  <li v-for="todo in todos" :key="todo.id" :id="todo.id" >
     <span> {{todo.text}} </span> 
-    <button>X</button> 
+    <span> {{index}} </span>
+    <button @click="deleteTodo">X</button> 
   </li>
 </ul>
 
@@ -75,13 +76,29 @@ export default {
      handleToDoSubmit(e){
        e.preventDefault();
        const todo = {
-         text: this.value,
-       };
+         text:this.value,
+         id:Date.now(),
+       }
       this.todos.push(todo);
       this.value = ""; 
+      this.saveTodos();
      },
-     deleteTodo() {
-       
+     deleteTodo(e) {
+       const li = e.target.parentElement;
+        this.todos= this.todos.filter((toDo) => toDo.id !== parseInt(li.id));
+       li.remove();
+       console.log(e);
+       this.saveTodos();
+     },
+     saveTodos() {
+       localStorage.setItem('todo', JSON.stringify(this.todos));
+     },
+     paintTodo() {
+       const saveToDos = localStorage.getItem("todo");
+       if(saveToDos) {
+         const parsedTodos = JSON.parse(saveToDos);
+         this.todos = parsedTodos;
+       }
      }
     
     
@@ -99,6 +116,7 @@ export default {
        this.id = this.savedUsername;
      }
      this.getQuote();
+     this.paintTodo();
   },
   
   components: {
