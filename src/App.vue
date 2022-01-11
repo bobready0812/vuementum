@@ -17,13 +17,65 @@
 <form @submit="handleToDoSubmit">
  <input v-model="value" class="todo" required type="text" placeholder="Write To Do"/>
 </form>
+<div class="tododiv">
 <ul>
+  <h1 class="font">월요일</h1>
   <li v-for="todo in todos" :key="todo.id" :id="todo.id" >
     <span> {{todo.text}} </span> 
     <span> {{index}} </span>
     <button @click="deleteTodo">X</button> 
   </li>
 </ul>
+<ul>
+  <h1 class="font">화요일</h1>
+  <li v-for="todo in todos" :key="todo.id" :id="todo.id" >
+    <span> {{todo.text}} </span> 
+    <span> {{index}} </span>
+    <button @click="deleteTodo">X</button> 
+  </li>
+</ul>
+<ul>
+  <h1 class="font">수요일</h1>
+  <li v-for="todo in todos" :key="todo.id" :id="todo.id" >
+    <span> {{todo.text}} </span> 
+    <span> {{index}} </span>
+    <button @click="deleteTodo">X</button> 
+  </li>
+</ul>
+<ul>
+  <h1 class="font">목요일</h1>
+  <li v-for="todo in todos" :key="todo.id" :id="todo.id" >
+    <span> {{todo.text}} </span> 
+    <span> {{index}} </span>
+    <button @click="deleteTodo">X</button> 
+  </li>
+</ul>
+<ul>
+  <h1 class="font">금요일</h1>
+  <li v-for="todo in todos" :key="todo.id" :id="todo.id" >
+    <span> {{todo.text}} </span> 
+    <span> {{index}} </span>
+    <button @click="deleteTodo">X</button> 
+  </li>
+</ul>
+<ul>
+  <h1 class="font">토요일</h1>
+  <li v-for="todo in todos" :key="todo.id" :id="todo.id" >
+    <span> {{todo.text}} </span> 
+    <span> {{index}} </span>
+    <button @click="deleteTodo">X</button> 
+  </li>
+</ul>
+<ul>
+  <h1 class="font">일요일</h1>
+  <li v-for="todo in todos" :key="todo.id" :id="todo.id" >
+    <span> {{todo.text}} </span> 
+    <span> {{index}} </span>
+    <button @click="deleteTodo">X</button> 
+  </li>
+</ul>
+</div>
+
 
 </template>
 
@@ -47,6 +99,8 @@ export default {
      todos: [],
      value:"",
      ampm2:"",
+     todaysDate:"",
+    
     }
   },
  
@@ -109,6 +163,9 @@ export default {
          const parsedTodos = JSON.parse(saveToDos);
          this.todos = parsedTodos;
        }
+     },
+     classify() {
+       
      }
     
     
@@ -127,6 +184,7 @@ export default {
      }
      this.getQuote();
      this.paintTodo();
+     this.classify();
   },
   
   components: {
@@ -139,6 +197,13 @@ export default {
 
 .hide {
   display: none;
+}
+.tododiv {
+  display: flex;
+  justify-content: center;
+}
+.font {
+  font-size: 24px;
 }
 
 #app {
