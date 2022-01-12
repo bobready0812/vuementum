@@ -110,7 +110,7 @@ export default {
       const ampm = date.getHours();
       if(ampm > 13) {
         this.ampm2 = "P.M."
-        this.hours = String(date.getHours() - 12).padStart(2,"0")
+        this.hours = date.getHours() - 12;
         this.minutes = String(date.getMinutes()).padStart(2, "0");
       } else if (ampm == 12) {
         this.ampm2 = "P.M.";
