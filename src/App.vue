@@ -20,11 +20,11 @@
 <ul>
   <li v-for="todo in todos" :key="todo.id" :id="todo.id" >
     <span> {{todo.text}} </span> 
-    <span> {{index}} </span>
     <button @click="deleteTodo">X</button> 
   </li>
 </ul>
-<ul>
+
+
 
 
 
@@ -61,7 +61,7 @@ export default {
       const ampm = date.getHours();
       if(ampm > 13) {
         this.ampm2 = "P.M."
-        this.hours = date.getHours() - 12;
+        this.hours = String(date.getHours() - 12).padStart(2,"0")
         this.minutes = String(date.getMinutes()).padStart(2, "0");
       } else if (ampm == 12) {
         this.ampm2 = "P.M.";
@@ -100,6 +100,7 @@ export default {
      },
      deleteTodo(e) {
        const li = e.target.parentElement;
+       
         this.todos= this.todos.filter((toDo) => toDo.id !== parseInt(li.id));
        li.remove();
        console.log(e);
@@ -115,9 +116,7 @@ export default {
          this.todos = parsedTodos;
        }
      },
-     classify() {
-       
-     }
+    
     
     
   },
@@ -135,7 +134,7 @@ export default {
      }
      this.getQuote();
      this.paintTodo();
-     this.classify();
+    
   },
   
   components: {
