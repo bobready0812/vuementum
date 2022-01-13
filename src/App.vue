@@ -23,6 +23,10 @@
     <button @click="deleteTodo">X</button> 
   </li>
 </ul>
+<div>
+  <span> {{weather}} </span>
+  <span> {{city}} </span>
+</div>
 
 
 
@@ -33,7 +37,7 @@
 <script>
 import quoteData from "./data/quoteData"
 
-
+const API_KEY ="15f88eaf631746bd32fc713337bd5c9d";
 
 export default {
   name: 'App',
@@ -51,7 +55,8 @@ export default {
      value:"",
      ampm2:"",
      todaysDate:"",
-    
+     weather:"",
+     city: ""
     }
   },
  
@@ -116,8 +121,21 @@ export default {
          this.todos = parsedTodos;
        }
      },
-    
-    
+    onGeoOk(position){
+    const lat = position.coords.latitude;
+    const log = position.coords.longitude;
+     
+    const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${log}&appid=${API_KEY}`;
+    fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+       this.weather = data.weather[0].main;
+       this.city = data.name;
+    }); 
+    }, 
+    onGeoError() {
+      alert("No location found!");
+    }
     
   },
   mounted () {
@@ -134,6 +152,7 @@ export default {
      }
      this.getQuote();
      this.paintTodo();
+     navigator.geolocation.getCurrentPosition(this.onGeoOk, this.onGeoError);
     
   },
   
