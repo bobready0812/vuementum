@@ -27,6 +27,7 @@
   <span> {{weather}} </span>
   <span> {{city}} </span>
 </div>
+<img :src="require(`./images/${img}.jpg`)">
 
 
 
@@ -56,7 +57,8 @@ export default {
      ampm2:"",
      todaysDate:"",
      weather:"",
-     city: ""
+     city: "",
+     img: "nothing",
     }
   },
  
@@ -129,10 +131,15 @@ export default {
     fetch(url)
     .then((response) => response.json())
     .then((data) => {
+       
        this.weather = data.weather[0].main;
        this.city = data.name;
+       this.img = data.weather[0].main;
+      
     }); 
     }, 
+   
+    
     onGeoError() {
       alert("No location found!");
     }
@@ -153,7 +160,7 @@ export default {
      this.getQuote();
      this.paintTodo();
      navigator.geolocation.getCurrentPosition(this.onGeoOk, this.onGeoError);
-    
+     
   },
   
   components: {
