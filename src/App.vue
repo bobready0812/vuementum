@@ -1,4 +1,5 @@
 <template>
+
 <div class="clock">
  <h1> {{ampm2}} {{hours}} : {{minutes}}</h1>
 </div>
@@ -36,7 +37,9 @@
 </template>
 
 <script>
-import quoteData from "./data/quoteData"
+import quoteData from "./data/quoteData";
+s
+
 
 const API_KEY ="15f88eaf631746bd32fc713337bd5c9d";
 
