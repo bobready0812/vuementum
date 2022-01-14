@@ -38,7 +38,7 @@
 
 <script>
 import quoteData from "./data/quoteData";
-s
+
 
 
 const API_KEY ="15f88eaf631746bd32fc713337bd5c9d";
@@ -128,9 +128,10 @@ export default {
      },
     onGeoOk(position){
     const lat = position.coords.latitude;
-    const log = position.coords.longitude;
+    const lon = position.coords.longitude;
      
-    const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${log}&appid=${API_KEY}`;
+    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={current, minutely, hourly, daily, alerts}&appid=${API_KEY}`
+    console.log(url);
     fetch(url)
     .then((response) => response.json())
     .then((data) => {
