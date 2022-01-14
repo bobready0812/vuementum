@@ -128,10 +128,9 @@ export default {
      },
     onGeoOk(position){
     const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
+    const log = position.coords.longitude;
      
-    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={current, minutely, hourly, daily, alerts}&appid=${API_KEY}`
-    console.log(url);
+    const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${log}&appid=${API_KEY}`;
     fetch(url)
     .then((response) => response.json())
     .then((data) => {
