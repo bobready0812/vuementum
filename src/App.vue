@@ -22,15 +22,18 @@
   <li v-for="todo in todos" :key="todo.id" :id="todo.id" >
     <span> {{todo.text}} </span> 
     <button @click="deleteTodo">X</button> 
-  </li>
+  </li>B
 </ul>
 <div>
   <span> {{weather}} </span>
   <span> {{city}} </span>
 </div>
 <img :src="require(`./images/${img}.jpg`)">
-<div class="app">
-
+<div class="toggle-wrapper">
+  <label class="toggle">
+    <input type="checkbox">
+    <span class="toggler round"></span>
+  </label>
 </div>
 
 
@@ -195,10 +198,26 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-.app {
-  width: 100vw;
-  min-height: 100vh;
-  background: #f3f3f3;
-  color: #15202B;
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  background: #FF0000;
+}
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.toggler {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #15202B;
+  -webkit-transition: ;
 }
 </style>
