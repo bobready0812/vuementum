@@ -2,6 +2,11 @@
 
 <div class="clock">
  <h1> {{ampm2}} {{hours}} : {{minutes}}</h1>
+ <div class="switch-component-wrapper" @click="changeSwitchValue">
+  <div class="class switch-wrapper" :class="{'on' : switchValue, 'off': !switchValue }">
+     <div class="circle"></div>
+  </div>
+</div>
 </div>
 <form @submit="onLoginSubmit" v-bind:class="{ hide : isHidden2}">
  <input 
@@ -29,13 +34,6 @@
   <span> {{city}} </span>
 </div>
 <img :src="require(`./images/${img}.jpg`)">
-<div class="toggle-wrapper">
-  <label class="toggle">
-    <input type="checkbox">
-    <span class="toggler round"></span>
-  </label>
-</div>
-
 
 
 
@@ -67,6 +65,7 @@ export default {
      weather:"",
      city: "",
      img: "nothing",
+     switchValue: true,
     }
   },
  
@@ -131,6 +130,12 @@ export default {
          this.todos = parsedTodos;
        }
      },
+     changeSwitchValue() {
+     this.switchValue = !this.switchValue;
+
+     },
+
+
     onGeoOk(position){
     const lat = position.coords.latitude;
     const log = position.coords.longitude;
@@ -198,26 +203,36 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-.toggle {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-  background: #FF0000;
+.switch-component-wrapper {
+  display: flex;
 }
-.toggle input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+.switch-wrapper {
+   width: 44px;
+   min-height: 22px;
+   display: flex;
+   cursor: pointer;
+   border-radius: 22px;
+   align-items: center;
+  padding: 2px;
+  transition: all 0.5s;
+  background: green;
 }
-.toggler {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #15202B;
-  -webkit-transition: ;
+
+.on {
+  background: green;
+  justify-content: flex-end;
 }
+
+.off {
+  background: gray;
+  justify-content: flex-start;
+}
+
+.circle {
+  background: #fff;
+  width: 18px;
+  height: 18px;
+  border-radius: 18px;
+}
+
 </style>
