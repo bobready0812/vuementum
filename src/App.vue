@@ -29,7 +29,9 @@
   <span> {{city}} </span>
 </div>
 <img :src="require(`./images/${img}.jpg`)">
+<div class="app">
 
+</div>
 
 
 
@@ -192,5 +194,11 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.app {
+  width: 100vw;
+  min-height: 100vh;
+  background: #f3f3f3;
+  color: #15202B;
 }
 </style>
