@@ -87,7 +87,7 @@ export default {
         this.hours = String(date.getHours()).padStart(2,"0")
         this.minutes = String(date.getMinutes()).padStart(2, "0");
       } } else {
-        
+         this.ampm2 = "P.M."
          this.hours = String(date.getHours()).padStart(2,"0")
          this.minutes = String(date.getMinutes()).padStart(2, "0");
 
