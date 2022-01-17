@@ -74,7 +74,7 @@ export default {
      city: "",
      img: "nothing",
      switchValue: false,
-     github:[],
+     
     }
   },
  
