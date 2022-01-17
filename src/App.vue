@@ -1,13 +1,15 @@
 <template>
-
+<!-- 시계 -->
 <div class="clock">
  <h1> {{ampm2}} {{hours}} : {{minutes}}</h1>
+ <!-- 토글스위치 -->
  <div class="switch-component-wrapper" @click="changeSwitchValue">
   <div class="class switch-wrapper" :class="{'on' : switchValue, 'off': !switchValue }">
      <div class="circle"></div>
   </div>
 </div>
 </div>
+<!-- 로그인폼 -->
 <form @submit="onLoginSubmit" v-bind:class="{ hide : isHidden2}">
  <input 
  required
@@ -17,22 +19,28 @@
  v-model="id"
  />
 </form>
+<!-- 로그인 후 h1 -->
 <h1 id="greeting" v-bind:class="{ hide : isHidden}"> Hi! {{id}} </h1>
+<!-- 명언 -->
 <h1> {{quote}} </h1>
 <h1> {{author}} </h1>
+<!-- todo 폼 -->
 <form @submit="handleToDoSubmit">
  <input v-model="value" class="todo" required type="text" placeholder="Write To Do"/>
 </form>
+<!-- todo -->
 <ul>
   <li v-for="todo in todos" :key="todo.id" :id="todo.id" >
     <span> {{todo.text}} </span> 
     <button @click="deleteTodo">X</button> 
   </li>B
 </ul>
+<!-- 날씨 -->
 <div>
   <span> {{weather}} </span>
   <span> {{city}} </span>
 </div>
+<!-- 날씨 배경 -->
 <img :src="require(`./images/${img}.jpg`)">
 
 
@@ -66,10 +74,12 @@ export default {
      city: "",
      img: "nothing",
      switchValue: false,
+     github:[],
     }
   },
  
   methods:{
+    //시계
     getClock(){
       const date = new Date();
       const ampm = date.getHours();
@@ -93,21 +103,24 @@ export default {
 
       } 
     } ,
+    //로그인
     onLoginSubmit(a) {
     a.preventDefault();
     this.isHidden = false;
     this.isHidden2 = true;
     localStorage.setItem("username", this.id);
     },
+    //스토레지에 저장된 유저이름을 불러오는 함수
     getSavedUserName() {
       this.savedUsername = localStorage.getItem("username");
     },
-
+    //랜덤 명언 설정
     getQuote() {
       const todaysQuote = quoteData[Math.floor(Math.random() * quoteData.length)];
       this.quote = todaysQuote.quote;
       this.author = todaysQuote.Author;
     },
+    //투두 추가
      handleToDoSubmit(e){
        e.preventDefault();
        const todo = {
@@ -118,6 +131,7 @@ export default {
       this.value = ""; 
       this.saveTodos();
      },
+     //투두 삭제
      deleteTodo(e) {
        const li = e.target.parentElement;
        
@@ -126,9 +140,11 @@ export default {
        console.log(e);
        this.saveTodos();
      },
+     //투두 저장
      saveTodos() {
        localStorage.setItem('todo', JSON.stringify(this.todos));
      },
+     //스토레지에 저장된 투두들 가져와서 보여주는 함수
      paintTodo() {
        const saveToDos = localStorage.getItem("todo");
        if(saveToDos) {
@@ -136,12 +152,13 @@ export default {
          this.todos = parsedTodos;
        }
      },
+     //토글 스위치 on off 함수
      changeSwitchValue() {
      this.switchValue = !this.switchValue;
 
      },
 
-
+     //날씨를 받아와 보여주는 함수
     onGeoOk(position){
     const lat = position.coords.latitude;
     const log = position.coords.longitude;
@@ -158,26 +175,33 @@ export default {
     }); 
     }, 
    
-    
+    //날씨가 호출되지 않았을때 실행되는 함수
     onGeoError() {
       alert("No location found!");
     }
     
   },
   mounted () {
+    //1초 간격으로 시계가 업데이트 됨
      setInterval(this.getClock,1000);
+    //스토레지에 저장된 유저이름 불러오는 함수 호출 
      this.getSavedUserName(); 
+     //저장된 유저이름이 없다면 로그인 폼을 보여줌
      if( this.savedUsername === null ) {
        this.isHidden2 = false;
        this.isHidden = true;
        this.id = "";
+       //저장된 유저이름이 있다면 자동 로그인 해줌
      } else {
        this.isHidden = false;
        this.isHidden2 = true;
        this.id = this.savedUsername;
      }
+     //랜덤 명언 함수를 호출
      this.getQuote();
+     //스토레지에 저장된 투두 불러오는 함수 호출
      this.paintTodo();
+     //자신의 위치를 받아와서 API를 호출하는 함수
      navigator.geolocation.getCurrentPosition(this.onGeoOk, this.onGeoError);
      
   },
