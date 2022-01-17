@@ -33,11 +33,11 @@
   <li v-for="todo in todos" :key="todo.id" :id="todo.id" >
     <span> {{todo.text}} </span> 
     <button @click="deleteTodo">X</button> 
-  </li>B
+  </li>
 </ul>
 <!-- 날씨 -->
 <div>
-  <span> {{weather}} </span>
+  <span> {{weather}} </span> <br/>
   <span> {{city}} </span>
 </div>
 <!-- 날씨 배경 -->
@@ -74,7 +74,6 @@ export default {
      city: "",
      img: "nothing",
      switchValue: false,
-     
     }
   },
  
