@@ -182,7 +182,7 @@ export default {
   },
   mounted () {
     //1초 간격으로 시계가 업데이트 됨
-     setInterval(this.getClock,1000);
+     setInterval(this.getClock,100);
     //스토레지에 저장된 유저이름 불러오는 함수 호출 
      this.getSavedUserName(); 
      //저장된 유저이름이 없다면 로그인 폼을 보여줌
