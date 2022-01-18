@@ -11,6 +11,7 @@
     "core-js": "^3.6.5",
     "react-paypal-express-checkout": "^1.0.5",
     "vue": "^3.0.0",
+    "vue-github-lawn": "^0.0.4",
     "vue-js-toggle-button": "^1.3.3"
   },
   "devDependencies": {

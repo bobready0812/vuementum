@@ -1,13 +1,15 @@
 <template>
+<!-- 토글스위치 -->
+ <div class="switch-component-wrapper">
+  <div class="class switch-wrapper" @click="changeSwitchValue" :class="{'on' : switchValue, 'off': !switchValue }">
+     <div class="circle">
+     </div>
+  </div>
+ </div>
 <!-- 시계 -->
 <div class="clock">
  <h1> {{ampm2}} {{hours}} : {{minutes}}</h1>
- <!-- 토글스위치 -->
- <div class="switch-component-wrapper" @click="changeSwitchValue">
-  <div class="class switch-wrapper" :class="{'on' : switchValue, 'off': !switchValue }">
-     <div class="circle"></div>
-  </div>
-</div>
+
 </div>
 <!-- 로그인폼 -->
 <form @submit="onLoginSubmit" v-bind:class="{ hide : isHidden2}">
@@ -42,9 +44,15 @@
 </div>
 <!-- 날씨 배경 -->
 <img :src="require(`./images/${img}.jpg`)">
+<h1 @click="changeNoteShow1" v-bind:class="{ hide : isHidden3}">노트</h1>
+<div v-bind:class="{ hide : isHidden4}" class="note">
+  <h4 @click="changeNoteShow2" class="shutdown">닫기</h4>
+  <textarea class="noteinput">
+</textarea>
+</div>
 
-
-
+ 
+  
 </template>
 
 <script>
@@ -53,6 +61,8 @@ import quoteData from "./data/quoteData";
 
 
 const API_KEY ="15f88eaf631746bd32fc713337bd5c9d";
+
+
 
 export default {
   name: 'App',
@@ -63,6 +73,8 @@ export default {
      id:"",
      isHidden:true,
      isHidden2:false,
+     isHidden3:false,
+     isHidden4:true,
      quote:"",
      author:"",
      savedUsername:"",
@@ -83,7 +95,7 @@ export default {
       const date = new Date();
       const ampm = date.getHours();
       if(this.switchValue === false) {
-      if(ampm > 13) {
+      if(ampm >= 13) {
         this.ampm2 = "P.M."
         this.hours = String(date.getHours() - 12).padStart(2,"0")
         this.minutes = String(date.getMinutes()).padStart(2, "0");
@@ -177,11 +189,20 @@ export default {
     //날씨가 호출되지 않았을때 실행되는 함수
     onGeoError() {
       alert("No location found!");
-    }
+    },
+    changeNoteShow1() {
+       this.isHidden3 = true;
+       this.isHidden4 = false;
+    },
+    changeNoteShow2() {
+      this.isHidden3 = false;
+      this.isHidden4 = true;
+
+    },
     
   },
   mounted () {
-    //1초 간격으로 시계가 업데이트 됨
+    //0.1초 간격으로 시계가 업데이트 됨
      setInterval(this.getClock,100);
     //스토레지에 저장된 유저이름 불러오는 함수 호출 
      this.getSavedUserName(); 
@@ -263,5 +284,42 @@ export default {
   height: 18px;
   border-radius: 18px;
 }
-
+.note {
+  width: 300px;
+  height: 300px;
+  border:1px solid black;
+  margin:0;
+}
+.noteinput {
+  width: 100%;
+  border:none;
+  padding: 0;
+  height: 90%;
+  overflow-y:scroll;
+}
+.noteinput::-webkit-scrollbar {
+  width:10px;
+  
+ 
+}
+.noteinput::-webkit-scrollbar-thumb {
+  width:10px;
+  background-color: skyblue;
+  border-radius: 10px;
+ 
+}
+.noteinput::-webkit-scrollbar-track {
+  width:10px;
+  background-color: blanchedalmond;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+ 
+}
+.noteinput:focus {
+  outline: none; 
+  
+}
+.shutdown {
+  margin:0;
+}
 </style>
