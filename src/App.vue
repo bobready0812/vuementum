@@ -47,6 +47,7 @@
 <h1 @click="changeNoteShow1" v-bind:class="{ hide : isHidden3}">노트</h1>
 <div v-bind:class="{ hide : isHidden4}" class="note">
   <h6 @click="changeNoteShow2" class="shutdown">닫기</h6>
+  <h4>{{isSave}} </h4>
   <textarea v-model="texta" class="noteinput">
 </textarea>
 </div>
@@ -87,6 +88,7 @@ export default {
      img: "nothing",
      switchValue: false,
      texta:"",
+     isSave:"",
     }
   },
  
@@ -203,6 +205,10 @@ export default {
     },
     getNote() {
       this.texta = localStorage.getItem('note');
+    },
+    autoSave() {
+      localStorage.setItem('note', this.texta);
+      this.isSave = "저장됨";
     }
   
     
@@ -230,6 +236,10 @@ export default {
      //자신의 위치를 받아와서 API를 호출하는 함수
      navigator.geolocation.getCurrentPosition(this.onGeoOk, this.onGeoError);
      this.getNote();
+     if(this.isHidden4 === false) {
+       setInterval(this.autoSave,5000);
+
+     }
      
   },
   
