@@ -47,7 +47,6 @@
 <h1 @click="changeNoteShow1" v-bind:class="{ hide : isHidden3}">노트</h1>
 <div v-bind:class="{ hide : isHidden4}" class="note">
   <h6 @click="changeNoteShow2" class="shutdown">닫기</h6>
-  <button @click="saveNote">저장</button>
   <textarea v-model="texta" class="noteinput">
 </textarea>
 </div>
@@ -199,15 +198,13 @@ export default {
     changeNoteShow2() {
       this.isHidden3 = false;
       this.isHidden4 = true;
-
-    },
-    saveNote() {
       localStorage.setItem('note', this.texta);
+    
     },
     getNote() {
       this.texta = localStorage.getItem('note');
-  
     }
+  
     
   },
   mounted () {
