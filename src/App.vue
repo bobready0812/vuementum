@@ -46,8 +46,9 @@
 <img :src="require(`./images/${img}.jpg`)">
 <h1 @click="changeNoteShow1" v-bind:class="{ hide : isHidden3}">노트</h1>
 <div v-bind:class="{ hide : isHidden4}" class="note">
-  <h4 @click="changeNoteShow2" class="shutdown">닫기</h4>
-  <textarea class="noteinput">
+  <h6 @click="changeNoteShow2" class="shutdown">닫기</h6>
+  <button @click="saveNote">저장</button>
+  <textarea v-model="texta" class="noteinput">
 </textarea>
 </div>
 
@@ -86,6 +87,7 @@ export default {
      city: "",
      img: "nothing",
      switchValue: false,
+     texta:"",
     }
   },
  
@@ -199,6 +201,13 @@ export default {
       this.isHidden4 = true;
 
     },
+    saveNote() {
+      localStorage.setItem('note', this.texta);
+    },
+    getNote() {
+      this.texta = localStorage.getItem('note');
+  
+    }
     
   },
   mounted () {
@@ -223,6 +232,7 @@ export default {
      this.paintTodo();
      //자신의 위치를 받아와서 API를 호출하는 함수
      navigator.geolocation.getCurrentPosition(this.onGeoOk, this.onGeoError);
+     this.getNote();
      
   },
   
@@ -289,6 +299,7 @@ export default {
   height: 300px;
   border:1px solid black;
   margin:0;
+  border-radius: 14px;
 }
 .noteinput {
   width: 100%;
