@@ -175,16 +175,16 @@ export default {
      //날씨를 받아와 보여주는 함수
     onGeoOk(position){
     const lat = position.coords.latitude;
-    const log = position.coords.longitude;
+    const lon = position.coords.longitude;
      
-    const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${log}&appid=${API_KEY}`;
+    let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=${API_KEY}&units=metric`;
+  
     fetch(url)
     .then((response) => response.json())
     .then((data) => {
        
-       this.weather = data.weather[0].main;
-       this.city = data.name;
-       this.img = data.weather[0].main;
+       this.weather = data.daily;
+       console.log(url);
       
     }); 
     }, 
