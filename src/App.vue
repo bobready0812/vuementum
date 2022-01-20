@@ -68,6 +68,7 @@
     <div class="bmListDiv2" v-for="bookmark in bookMarks" :key="bookmark.id" :id="bookmark.id">
       <span class="bmExplain">{{bookmark.explain}}</span>
       <a class="link" v-bind:href="bookmark.link">{{bookmark.link}}</a>
+      <button @click="bookmarkDelete">X</button> 
     </div>
 </div>
  
@@ -172,7 +173,6 @@ export default {
        const li = e.target.parentElement;
        
         this.todos= this.todos.filter((toDo) => toDo.id !== parseInt(li.id));
-       li.remove();
        console.log(e);
        this.saveTodos();
      },
@@ -254,7 +254,10 @@ export default {
       this.linkValue = "";
       this.explainValue = "";
     },
-    bookmarkDelete()
+    bookmarkDelete(e) {
+      const div = e.target.parentElement;
+      this.bookMarks= this.bookMarks.filter((bm) => bm.id !== parseInt(div.id));
+    }
 
   
     
