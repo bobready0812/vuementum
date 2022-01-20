@@ -64,6 +64,12 @@
  <input v-model="explainValue" required placeholder="링크 설명">
  <input type="submit">
 </form>
+<div class="bmListDiv1">
+    <div class="bmListDiv2" v-for="bookmark in bookMarks" :key="bookmark.id" :id="bookmark.id">
+      <span class="bmExplain">{{bookmark.explain}}</span>
+      <a class="link" v-bind:href="bookmark.link">{{bookmark.link}}</a>
+    </div>
+</div>
  
   
 </template>
@@ -245,7 +251,10 @@ export default {
         id: Date.now(),
       }
       this.bookMarks.push(bookmark);
-    }
+      this.linkValue = "";
+      this.explainValue = "";
+    },
+    bookmarkDelete()
 
   
     
