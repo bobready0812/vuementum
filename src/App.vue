@@ -253,10 +253,22 @@ export default {
       this.bookMarks.push(bookmark);
       this.linkValue = "";
       this.explainValue = "";
+      this.bookmarkSave();
     },
     bookmarkDelete(e) {
       const div = e.target.parentElement;
       this.bookMarks= this.bookMarks.filter((bm) => bm.id !== parseInt(div.id));
+      this.bookmarkSave();
+    },
+    bookmarkSave() {
+      localStorage.setItem('bookmark' ,JSON.stringify(this.bookMarks));
+    },
+    bookmarkPaint() {
+      const savedBookmark = localStorage.getItem('bookmark');
+      if(savedBookmark) {
+        const parsedBookmark = JSON.parse(savedBookmark);
+        this.bookMarks = parsedBookmark;
+      }
     }
 
   
@@ -286,6 +298,7 @@ export default {
      navigator.geolocation.getCurrentPosition(this.onGeoOk, this.onGeoError);
      navigator.geolocation.getCurrentPosition(this.onGeoOk2, this.onGeoError);
      this.getNote();
+     this.bookmarkPaint();
     
      
   },
