@@ -39,8 +39,15 @@
 </ul>
 <!-- 날씨 -->
 <div>
-  <span> {{weather}} </span> <br/>
-  <span> {{city}} </span>
+  <span>{{day}}</span> <br>
+  <span>{{city}}</span>
+</div>
+<div>
+  <div v-for="(day,i) in weather" :key="i">
+    <span>{{day.weather[0].date}}</span>
+    <span>{{day.weather[0].main}}</span><br>
+    <span>{{(((day.temp.min) + (day.temp.max)) /2).toFixed(1)}}</span>
+  </div>
 </div>
 <!-- 날씨 배경 -->
 <img :src="require(`./images/${img}.jpg`)">
@@ -51,7 +58,12 @@
   <textarea v-model="texta" class="noteinput">
 </textarea>
 </div>
-
+<!-- 북마크 -->
+<form @submit="bookmarkAdd">
+ <input v-model="linkValue" required placeholder="링크 붙여넣기">
+ <input v-model="explainValue" required placeholder="링크 설명">
+ <input type="submit">
+</form>
  
   
 </template>
@@ -89,6 +101,10 @@ export default {
      img: "nothing",
      switchValue: false,
      texta:"",
+     day:"",
+     linkValue:"",
+     explainValue: "",
+     bookMarks:[],
     }
   },
  
@@ -188,6 +204,21 @@ export default {
       
     }); 
     }, 
+    onGeoOk2(position){
+    const lat = position.coords.latitude;
+    const log = position.coords.longitude;
+     
+    const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${log}&appid=${API_KEY}`;
+    fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+       
+       this.day = data.weather[0].main;
+       this.city = data.name;
+       this.img = data.weather[0].main;
+      
+    }); 
+    }, 
    
     //날씨가 호출되지 않았을때 실행되는 함수
     onGeoError() {
@@ -206,7 +237,15 @@ export default {
     getNote() {
       this.texta = localStorage.getItem('note');
     },
-  
+    bookmarkAdd(a) {
+      a.preventDefault();
+      const bookmark = {
+        link:this.linkValue,
+        explain:this.explainValue,
+        id: Date.now(),
+      }
+      this.bookMarks.push(bookmark);
+    }
 
   
     
@@ -233,6 +272,7 @@ export default {
      this.paintTodo();
      //자신의 위치를 받아와서 API를 호출하는 함수
      navigator.geolocation.getCurrentPosition(this.onGeoOk, this.onGeoError);
+     navigator.geolocation.getCurrentPosition(this.onGeoOk2, this.onGeoError);
      this.getNote();
     
      
