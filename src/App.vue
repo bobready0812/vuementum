@@ -21,7 +21,7 @@
  v-model="id"
  />
 </form>
-<!-- 로그인 후 h1 -->
+<!-- 로그인 인사-->
 <h1 id="greeting" v-bind:class="{ hide : GreetingHidden}"> Hi! {{id}} </h1>
 <!-- 명언 -->
 <h1> {{quote}} </h1>
@@ -37,11 +37,12 @@
     <button @click="todoDelete">X</button> 
   </li>
 </ul>
-<!-- 날씨 -->
+<!-- 오늘 날씨 -->
 <div>
   <span>{{day}}</span> <br>
   <span>{{city}}</span>
 </div>
+<!-- 일주일 날씨 -->
 <div>
   <div v-for="(day,i) in weather" :key="i">
     <span>{{day.weather[0].date}}</span>
@@ -51,18 +52,19 @@
 </div>
 <!-- 날씨 배경 -->
 <img :src="require(`./images/${img}.jpg`)">
-<h1 @click="changeNoteShow1" v-bind:class="{ hide : NoteTextHidden}">노트</h1>
+<h1 @click="NoteTextHide" v-bind:class="{ hide : NoteTextHidden}">노트</h1>
 <div v-bind:class="{ hide : NoteHidden}" class="note">
-  <h6 @click="changeNoteShow2" class="shutdown">닫기</h6>
+  <h6 @click="NoteHide" class="shutdown">닫기</h6>
   <textarea v-model="noteValue" class="noteinput">
 </textarea>
 </div>
-<!-- 북마크 -->
+<!-- 북마크  폼-->
 <form @submit="bookmarkAdd">
  <input v-model="linkValue" required placeholder="링크 붙여넣기">
  <input v-model="explainValue" required placeholder="링크 설명">
  <input type="submit">
 </form>
+<!-- 북마크 -->
 <div class="bmListDiv1">
     <div class="bmListDiv2" v-for="bookmark in bookMarks" :key="bookmark.id" :id="bookmark.id">
       <span class="bmExplain">{{bookmark.explain}}</span>
@@ -76,11 +78,11 @@
 
 <script>
 import quoteData from "./data/quoteData";
-
+//명언 데이터
 
 
 const API_KEY ="15f88eaf631746bd32fc713337bd5c9d";
-
+//API 키
 
 
 export default {
@@ -90,35 +92,34 @@ export default {
      hours:"00", //시간
      minutes:"00", //분
      id:"", //사용자 이름
-     GeetingHidden:true, //로그인 인사 메시지 초기 숨겨짐
+     GreetingHidden:true, //로그인 인사 메시지 초기 숨겨짐
      LoginFormHidden:false, //로그인 폼 초기 보여줌
      NoteTextHidden:false, //노트 버튼 초기 보여줌
      NoteHidden:true, //노트 초기 숨겨짐
      quote:"", //명언 내용
      author:"", //명언 저자
-     savedUsername:"", //
-     todos: [],
-     todoText:"",
-     afbf:"",
-     todaysDate:"",
-     weather:"",
-     city: "",
-     img: "nothing",
-     onOff: false,
-     noteValue:"",
-     day:"",
-     linkValue:"",
-     explainValue: "",
-     bookMarks:[],
+     savedUsername:"", //스토레지에 저장되는 유저 이름
+     todos: [], //투두들이 담긴 어레이
+     todoText:"", //투두 내용
+     afbf:"", //오전 오후 나타냄
+     weather:"", //일주일 날씨 데이터를 담는 부분
+     city: "", // 사용자의 위치
+     img: "nothing", //이미지 소스
+     onOff: false, //토글 스위치 onOff
+     noteValue:"", //노트에 쓴 내용
+     day:"", //오늘 날씨
+     linkValue:"", //북마크 링크
+     explainValue: "", //북마크 설명
+     bookMarks:[], //북마크들이 담긴 어레이
     }
   },
  
   methods:{
-    //시계
+    //시계 호출 함수
     getClock(){
-      const date = new Date();
+      const date = new Date(); 
       const ampm = date.getHours();
-      if(this.onOff === false) {
+      if(this.onOff === false) { //토글 시계가 꺼져있으면 12시간 기준
       if(ampm >= 13) {
         this.afbf = "P.M."
         this.hours = String(date.getHours() - 12).padStart(2,"0")
@@ -131,7 +132,7 @@ export default {
         this.afbf = "A.M.";
         this.hours = String(date.getHours()).padStart(2,"0")
         this.minutes = String(date.getMinutes()).padStart(2, "0");
-      } } else {
+      } } else {      //토글 시계가 켜져있으면 24시간 기준
          this.afbf = "P.M."
          this.hours = String(date.getHours()).padStart(2,"0")
          this.minutes = String(date.getMinutes()).padStart(2, "0");
@@ -141,7 +142,7 @@ export default {
     //로그인
     Login(a) {
     a.preventDefault();
-    this.GeetingHidden = false;
+    this.GreetingHidden = false;
     this.LoginFormHidden = true;
     localStorage.setItem("username", this.id);
     },
@@ -223,14 +224,16 @@ export default {
     weatherError() {
       alert("No location found!");
     },
-    changeNoteShow1() {
+    //노트 버튼 클릭시 노트를 보여주는 함수
+    NoteTextHide() {
        this.NoteTextHidden = true;
        this.NoteHidden = false;
     },
-    changeNoteShow2() {
+    //닫기 버튼 클릭시 
+    NoteHide() {
       this.NoteTextHidden = false;
       this.NoteHidden = true;
-      localStorage.setItem('note', this.texta);
+      localStorage.setItem('note', this.noteValue);
     
     },
     getNote() {
