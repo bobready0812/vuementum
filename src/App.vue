@@ -1,14 +1,14 @@
 <template>
 <!-- 토글스위치 -->
  <div class="switch-component-wrapper">
-  <div class="class switch-wrapper" @click="changeSwitchValue" :class="{'on' : switchValue, 'off': !switchValue }">
+  <div class="class switch-wrapper" @click="switchOnOff" :class="{'on' : onOff, 'off': !onOff }">
      <div class="circle">
      </div>
   </div>
  </div>
 <!-- 시계 -->
 <div class="clock">
- <h1> {{ampm2}} {{hours}} : {{minutes}}</h1>
+ <h1> {{afbf}} {{hours}} : {{minutes}}</h1>
 
 </div>
 <!-- 로그인폼 -->
@@ -101,12 +101,12 @@ export default {
      savedUsername:"",
      todos: [],
      value:"",
-     ampm2:"",
+     afbf:"",
      todaysDate:"",
      weather:"",
      city: "",
      img: "nothing",
-     switchValue: false,
+     onOff: false,
      texta:"",
      day:"",
      linkValue:"",
@@ -122,19 +122,19 @@ export default {
       const ampm = date.getHours();
       if(this.switchValue === false) {
       if(ampm >= 13) {
-        this.ampm2 = "P.M."
+        this.afbf = "P.M."
         this.hours = String(date.getHours() - 12).padStart(2,"0")
         this.minutes = String(date.getMinutes()).padStart(2, "0");
       } else if (ampm == 12) {
-        this.ampm2 = "P.M.";
+        this.afbf = "P.M.";
         this.hours = String(date.getHours()).padStart(2,"0")
         this.minutes = String(date.getMinutes()).padStart(2, "0");
       } else {
-        this.ampm2 = "A.M.";
+        this.afbf = "A.M.";
         this.hours = String(date.getHours()).padStart(2,"0")
         this.minutes = String(date.getMinutes()).padStart(2, "0");
       } } else {
-         this.ampm2 = "P.M."
+         this.afbf = "P.M."
          this.hours = String(date.getHours()).padStart(2,"0")
          this.minutes = String(date.getMinutes()).padStart(2, "0");
 
@@ -189,8 +189,8 @@ export default {
        }
      },
      //토글 스위치 on off 함수
-     changeSwitchValue() {
-     this.switchValue = !this.switchValue;
+     switchOnOff() {
+     this.onOff = !this.onOff;
 
      },
 
