@@ -12,7 +12,7 @@
 
 </div>
 <!-- 로그인폼 -->
-<form @submit="onLoginSubmit" v-bind:class="{ hide : isHidden2}">
+<form @submit="Login" v-bind:class="{ hide : LoginFormHidden}">
  <input 
  required
  maxlength="15"
@@ -22,13 +22,13 @@
  />
 </form>
 <!-- 로그인 후 h1 -->
-<h1 id="greeting" v-bind:class="{ hide : isHidden}"> Hi! {{id}} </h1>
+<h1 id="greeting" v-bind:class="{ hide : GreetingHidden}"> Hi! {{id}} </h1>
 <!-- 명언 -->
 <h1> {{quote}} </h1>
 <h1> {{author}} </h1>
 <!-- todo 폼 -->
-<form @submit="handleToDoSubmit">
- <input v-model="value" class="todo" required type="text" placeholder="Write To Do"/>
+<form @submit="todoAdd">
+ <input v-model="todoText" class="todo" required type="text" placeholder="Write To Do"/>
 </form>
 <!-- todo -->
 <ul>
@@ -91,8 +91,8 @@ export default {
      hours:"00",
      minutes:"00",
      id:"",
-     isHidden:true,
-     isHidden2:false,
+     GeetingHidden:true,
+     LoginFormHidden:false,
      isHidden3:false,
      isHidden4:true,
      isHidden5:true,
@@ -100,7 +100,7 @@ export default {
      author:"",
      savedUsername:"",
      todos: [],
-     value:"",
+     todoText:"",
      afbf:"",
      todaysDate:"",
      weather:"",
@@ -141,10 +141,10 @@ export default {
       } 
     } ,
     //로그인
-    onLoginSubmit(a) {
+    Login(a) {
     a.preventDefault();
-    this.isHidden = false;
-    this.isHidden2 = true;
+    this.GeetingHidden = false;
+    this.LoginFormHidden = true;
     localStorage.setItem("username", this.id);
     },
     //스토레지에 저장된 유저이름을 불러오는 함수
@@ -158,14 +158,14 @@ export default {
       this.author = todaysQuote.Author;
     },
     //투두 추가
-     handleToDoSubmit(e){
+     todoAdd(e){
        e.preventDefault();
        const todo = {
-         text:this.value,
+         text:this.todoText,
          id:Date.now(),
        }
       this.todos.push(todo);
-      this.value = ""; 
+      this.todoText = ""; 
       this.saveTodos();
      },
      //투두 삭제
@@ -174,10 +174,10 @@ export default {
        
         this.todos= this.todos.filter((toDo) => toDo.id !== parseInt(li.id));
        console.log(e);
-       this.saveTodos();
+       this.todoSave();
      },
      //투두 저장
-     saveTodos() {
+     todoSave() {
        localStorage.setItem('todo', JSON.stringify(this.todos));
      },
      //스토레지에 저장된 투두들 가져와서 보여주는 함수
