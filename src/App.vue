@@ -51,11 +51,10 @@
 </div>
 <!-- 날씨 배경 -->
 <img :src="require(`./images/${img}.jpg`)">
-<h1 @click="changeNoteShow1" v-bind:class="{ hide : isHidden3}">노트</h1>
-<div v-bind:class="{ hide : isHidden4}" class="note">
+<h1 @click="changeNoteShow1" v-bind:class="{ hide : NoteTextHidden}">노트</h1>
+<div v-bind:class="{ hide : NoteHidden}" class="note">
   <h6 @click="changeNoteShow2" class="shutdown">닫기</h6>
-  <h4 v-bind:class="{ hide : isHidden5}"> 저장됨 </h4>
-  <textarea v-model="texta" class="noteinput">
+  <textarea v-model="noteValue" class="noteinput">
 </textarea>
 </div>
 <!-- 북마크 -->
@@ -88,17 +87,16 @@ export default {
   name: 'App',
   data() {
     return {
-     hours:"00",
-     minutes:"00",
-     id:"",
-     GeetingHidden:true,
-     LoginFormHidden:false,
-     isHidden3:false,
-     isHidden4:true,
-     isHidden5:true,
-     quote:"",
-     author:"",
-     savedUsername:"",
+     hours:"00", //시간
+     minutes:"00", //분
+     id:"", //사용자 이름
+     GeetingHidden:true, //로그인 인사 메시지 초기 숨겨짐
+     LoginFormHidden:false, //로그인 폼 초기 보여줌
+     NoteTextHidden:false, //노트 버튼 초기 보여줌
+     NoteHidden:true, //노트 초기 숨겨짐
+     quote:"", //명언 내용
+     author:"", //명언 저자
+     savedUsername:"", //
      todos: [],
      todoText:"",
      afbf:"",
@@ -107,7 +105,7 @@ export default {
      city: "",
      img: "nothing",
      onOff: false,
-     texta:"",
+     noteValue:"",
      day:"",
      linkValue:"",
      explainValue: "",
@@ -120,7 +118,7 @@ export default {
     getClock(){
       const date = new Date();
       const ampm = date.getHours();
-      if(this.switchValue === false) {
+      if(this.onOff === false) {
       if(ampm >= 13) {
         this.afbf = "P.M."
         this.hours = String(date.getHours() - 12).padStart(2,"0")
@@ -180,9 +178,9 @@ export default {
      },
      //스토레지에 저장된 투두들 가져와서 보여주는 함수
      getSavedTodo() {
-       const saveToDos = localStorage.getItem("todo");
-       if(saveToDos) {
-         const parsedTodos = JSON.parse(saveToDos);
+       const savedToDos = localStorage.getItem("todo");
+       if(savedToDos) {
+         const parsedTodos = JSON.parse(savedToDos);
          this.todos = parsedTodos;
        }
      },
@@ -193,7 +191,7 @@ export default {
      },
 
      //날씨를 받아와 보여주는 함수
-    onGeoOk(position){
+    todaysWeather(position){
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
      
@@ -205,7 +203,7 @@ export default {
        this.weather = data.daily;
     }); 
     }, 
-    onGeoOk2(position){
+    weekWeather(position){
     const lat = position.coords.latitude;
     const log = position.coords.longitude;
      
@@ -222,21 +220,21 @@ export default {
     }, 
    
     //날씨가 호출되지 않았을때 실행되는 함수
-    onGeoError() {
+    weatherError() {
       alert("No location found!");
     },
     changeNoteShow1() {
-       this.isHidden3 = true;
-       this.isHidden4 = false;
+       this.NoteTextHidden = true;
+       this.NoteHidden = false;
     },
     changeNoteShow2() {
-      this.isHidden3 = false;
-      this.isHidden4 = true;
+      this.NoteTextHidden = false;
+      this.NoteHidden = true;
       localStorage.setItem('note', this.texta);
     
     },
     getNote() {
-      this.texta = localStorage.getItem('note');
+      this.noteValue = localStorage.getItem('note');
     },
     bookmarkAdd(a) {
       a.preventDefault();
@@ -276,13 +274,13 @@ export default {
      this.getSavedUserName(); 
      //저장된 유저이름이 없다면 로그인 폼을 보여줌
      if( this.savedUsername === null ) {
-       this.isHidden2 = false;
-       this.isHidden = true;
+       this.LoginFormHidden = false;
+       this.GreetingHidden = true;
        this.id = "";
        //저장된 유저이름이 있다면 자동 로그인 해줌
      } else {
-       this.isHidden = false;
-       this.isHidden2 = true;
+       this.GreetingHidden = false;
+       this.LoginFormHidden  = true;
        this.id = this.savedUsername;
      }
      //랜덤 명언 함수를 호출
@@ -290,8 +288,8 @@ export default {
      //스토레지에 저장된 투두 불러오는 함수 호출
      this.getSavedTodo();
      //자신의 위치를 받아와서 API를 호출하는 함수
-     navigator.geolocation.getCurrentPosition(this.onGeoOk, this.onGeoError);
-     navigator.geolocation.getCurrentPosition(this.onGeoOk2, this.onGeoError);
+     navigator.geolocation.getCurrentPosition(this.todaysWeather, this.weatherError);
+     navigator.geolocation.getCurrentPosition(this.weekWeather, this.weatherError);
      this.getNote();
      this.bookmarkPaint();
     
