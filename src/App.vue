@@ -34,7 +34,7 @@
 <ul>
   <li v-for="todo in todos" :key="todo.id" :id="todo.id" >
     <span> {{todo.text}} </span> 
-    <button @click="deleteTodo">X</button> 
+    <button @click="todoDelete">X</button> 
   </li>
 </ul>
 <!-- 날씨 -->
@@ -169,11 +169,9 @@ export default {
       this.saveTodos();
      },
      //투두 삭제
-     deleteTodo(e) {
+     todoDelete(e) {
        const li = e.target.parentElement;
-       
-        this.todos= this.todos.filter((toDo) => toDo.id !== parseInt(li.id));
-       console.log(e);
+       this.todos= this.todos.filter((todo) => todo.id !== parseInt(li.id));
        this.todoSave();
      },
      //투두 저장
@@ -181,7 +179,7 @@ export default {
        localStorage.setItem('todo', JSON.stringify(this.todos));
      },
      //스토레지에 저장된 투두들 가져와서 보여주는 함수
-     paintTodo() {
+     getSavedTodo() {
        const saveToDos = localStorage.getItem("todo");
        if(saveToDos) {
          const parsedTodos = JSON.parse(saveToDos);
@@ -204,10 +202,7 @@ export default {
     fetch(url)
     .then((response) => response.json())
     .then((data) => {
-       
        this.weather = data.daily;
-       console.log(url);
-      
     }); 
     }, 
     onGeoOk2(position){
@@ -293,7 +288,7 @@ export default {
      //랜덤 명언 함수를 호출
      this.getQuote();
      //스토레지에 저장된 투두 불러오는 함수 호출
-     this.paintTodo();
+     this.getSavedTodo();
      //자신의 위치를 받아와서 API를 호출하는 함수
      navigator.geolocation.getCurrentPosition(this.onGeoOk, this.onGeoError);
      navigator.geolocation.getCurrentPosition(this.onGeoOk2, this.onGeoError);
