@@ -89,28 +89,28 @@ export default {
   name: 'App',
   data() {
     return {
-     hours:"00", //시간
-     minutes:"00", //분
-     id:"", //사용자 이름
-     GreetingHidden:true, //로그인 인사 메시지 초기 숨겨짐
-     LoginFormHidden:false, //로그인 폼 초기 보여줌
-     NoteTextHidden:false, //노트 버튼 초기 보여줌
-     NoteHidden:true, //노트 초기 숨겨짐
-     quote:"", //명언 내용
-     author:"", //명언 저자
-     savedUsername:"", //스토레지에 저장되는 유저 이름
-     todos: [], //투두들이 담긴 어레이
-     todoText:"", //투두 내용
-     afbf:"", //오전 오후 나타냄
-     weather:"", //일주일 날씨 데이터를 담는 부분
-     city: "", // 사용자의 위치
-     img: "nothing", //이미지 소스
-     onOff: false, //토글 스위치 onOff
-     noteValue:"", //노트에 쓴 내용
-     day:"", //오늘 날씨
-     linkValue:"", //북마크 링크
-     explainValue: "", //북마크 설명
-     bookMarks:[], //북마크들이 담긴 어레이
+    afbf:"", //오전 오후 나타냄
+    hours:"00", //시간
+    minutes:"00", //분
+    onOff: false, //토글 스위치 onOff
+    id:"", //사용자 이름
+    savedUsername:"", //스토레지에 저장되는 유저 이름
+    GreetingHidden:true, //로그인 인사 메시지 초기 숨겨짐
+    LoginFormHidden:false, //로그인 폼 초기 보여줌
+    quote:"", //명언 내용
+    author:"", //명언 저자
+    todos: [], //투두들이 담긴 어레이
+    todoText:"", //투두 내용
+    day:"", //오늘 날씨
+    city: "", // 사용자의 위치
+    weather:"", //일주일 날씨 데이터를 담는 부분
+    img: "nothing", //이미지 소스
+    NoteTextHidden:false, //노트 버튼 초기 보여줌
+    NoteHidden:true, //노트 초기 숨겨짐
+    noteValue:"", //노트에 쓴 내용
+    linkValue:"", //북마크 링크
+    explainValue: "", //북마크 설명
+    bookMarks:[], //북마크들이 담긴 어레이
     }
   },
  
