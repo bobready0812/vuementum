@@ -191,7 +191,7 @@ export default {
 
      },
 
-     //날씨를 받아와 보여주는 함수
+     //오늘 날씨 불러와주는 함수
     todaysWeather(position){
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
@@ -204,6 +204,7 @@ export default {
        this.weather = data.daily;
     }); 
     }, 
+    //일주일 날씨 %온도 가져오는 함수
     weekWeather(position){
     const lat = position.coords.latitude;
     const log = position.coords.longitude;
@@ -229,16 +230,18 @@ export default {
        this.NoteTextHidden = true;
        this.NoteHidden = false;
     },
-    //닫기 버튼 클릭시 
+    //닫기 버튼 클릭시 노트 버튼을 보여주는 함수
     NoteHide() {
       this.NoteTextHidden = false;
       this.NoteHidden = true;
       localStorage.setItem('note', this.noteValue);
     
     },
+    //스토레지에서 미리 작성된 노트의 내용을 가져와주는 함수
     getNote() {
       this.noteValue = localStorage.getItem('note');
     },
+    //북마크 추가
     bookmarkAdd(a) {
       a.preventDefault();
       const bookmark = {
@@ -251,15 +254,18 @@ export default {
       this.explainValue = "";
       this.bookmarkSave();
     },
+    //북마크 삭제
     bookmarkDelete(e) {
       const div = e.target.parentElement;
       this.bookMarks= this.bookMarks.filter((bm) => bm.id !== parseInt(div.id));
       this.bookmarkSave();
     },
+    //북마크 저장
     bookmarkSave() {
       localStorage.setItem('bookmark' ,JSON.stringify(this.bookMarks));
     },
-    bookmarkPaint() {
+    //스토레지에서 북마크를 가져오는 함수
+    getSavedBookmark() {
       const savedBookmark = localStorage.getItem('bookmark');
       if(savedBookmark) {
         const parsedBookmark = JSON.parse(savedBookmark);
@@ -294,7 +300,7 @@ export default {
      navigator.geolocation.getCurrentPosition(this.todaysWeather, this.weatherError);
      navigator.geolocation.getCurrentPosition(this.weekWeather, this.weatherError);
      this.getNote();
-     this.bookmarkPaint();
+     this.getSavedBookmark();
     
      
   },
