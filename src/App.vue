@@ -34,7 +34,7 @@
 <ul>
   <li v-for="todo in todos" :key="todo.id" :id="todo.id" >
     <span> {{todo.text}} </span> 
-    <button @click="todoDelete">X</button> 
+    <button @click="todoDelete">삭제</button> 
   </li>
 </ul>
 <!-- 오늘 날씨 -->
@@ -69,7 +69,7 @@
     <div class="bmListDiv2" v-for="bookmark in bookMarks" :key="bookmark.id" :id="bookmark.id">
       <span class="bmExplain">{{bookmark.explain}}</span>
       <a class="link" v-bind:href="bookmark.link">{{bookmark.link}}</a>
-      <button @click="bookmarkDelete">X</button> 
+      <button @click="bookmarkDelete">삭제</button> 
     </div>
 </div>
  
