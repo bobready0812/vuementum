@@ -403,9 +403,17 @@ export default {
   margin:0;
 }
 .todo {
-  border-radius: 5px;
+  border-radius: 8px;
   width:400px;
   height: 30px;
-  color:
+  background-color: rgba(196,196,196, 0.5);
+  border: none;
+  padding-left: 8px;
+}
+.todo::placeholder {
+  color:#2c3e50;
+}
+.todo:focus {
+  outline: none;
 }
 </style>
