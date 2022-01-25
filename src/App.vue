@@ -211,6 +211,7 @@ export default {
     .then((response) => response.json())
     .then((data) => {
        this.weather = data.daily;
+       console.log(url);
     }); 
     }, 
     //일주일 날씨 %온도 가져오는 함수
@@ -283,6 +284,13 @@ export default {
     },
     showSearch() {
       this.searchHidden = !this.searchHidden;
+    },
+    getDate() {
+    const week = ["일", "월", "화", "수" , "목" , "금", "토"];
+    const day = new Date();  
+    const date = day.getDay();
+    console.log(week[date]);
+      
     }
 
   
@@ -313,9 +321,10 @@ export default {
      navigator.geolocation.getCurrentPosition(this.weekWeather, this.weatherError);
      this.getNote();
      this.getSavedBookmark();
-    
+     this.getDate();
      
   },
+  
   
   components: {
    
