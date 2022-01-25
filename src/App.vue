@@ -286,10 +286,10 @@ export default {
       this.searchHidden = !this.searchHidden;
     },
     getDate() {
-    const week = ["일", "월", "화", "수" , "목" , "금", "토"];
+    const weeks = ["일", "월", "화", "수" , "목" , "금", "토"];
     const day = new Date();  
     const date = day.getDay();
-    console.log(week[date]);
+    console.log(weeks[date]);
       
     }
 
