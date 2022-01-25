@@ -31,12 +31,14 @@
  <input v-model="todoText" class="todo" required type="text" placeholder="Write To Do"/>
 </form>
 <!-- todo -->
+<div class="todoDiv">
 <ul>
   <li v-for="todo in todos" :key="todo.id" :id="todo.id" >
     <span> {{todo.text}} </span> 
     <button @click="todoDelete">삭제</button> 
   </li>
 </ul>
+</div>
 <!-- 오늘 날씨 -->
 <div>
   <span>{{day}}</span> <br>
@@ -50,6 +52,12 @@
     <span>{{(((day.temp.min) + (day.temp.max)) /2).toFixed(1)}}</span>
   </div>
 </div>
+<!-- 검색폼 -->
+<div class="searchDiv">
+  <form class="searchForm" action="https://www.google.com/search" method="GET">
+    <input class="search" name="q" placeholder="search">
+  </form>
+ </div>
 <!-- 날씨 배경 -->
 <img :src="require(`./images/${img}.jpg`)">
 <h1 @click="NoteTextHide" v-bind:class="{ hide : NoteTextHidden}">노트</h1>
@@ -72,7 +80,7 @@
       <button @click="bookmarkDelete">삭제</button> 
     </div>
 </div>
- 
+
   
 </template>
 
@@ -111,6 +119,7 @@ export default {
     linkValue:"", //북마크 링크
     explainValue: "", //북마크 설명
     bookMarks:[], //북마크들이 담긴 어레이
+    searchHidden:true,
     }
   },
  
@@ -271,6 +280,9 @@ export default {
         const parsedBookmark = JSON.parse(savedBookmark);
         this.bookMarks = parsedBookmark;
       }
+    },
+    showSearch() {
+      this.searchHidden = !this.searchHidden;
     }
 
   
@@ -416,4 +428,14 @@ export default {
 .todo:focus {
   outline: none;
 }
+.todoDiv {
+  overflow: scroll;
+  width: 640px;
+  height: 420px;
+}
+.todoDiv::-webkit-scrollbar {
+  display: none;
+}
+
+
 </style>
