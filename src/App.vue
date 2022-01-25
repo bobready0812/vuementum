@@ -54,7 +54,7 @@
 <img :src="require(`./images/${img}.jpg`)">
 <h1 @click="NoteTextHide" v-bind:class="{ hide : NoteTextHidden}">노트</h1>
 <div v-bind:class="{ hide : NoteHidden}" class="note">
-  <h6 @click="NoteHide" class="shutdown">닫기</h6>
+  <h6 @click="NoteHide" class="shutdown">노트 닫기</h6>
   <textarea v-model="noteValue" class="noteinput">
 </textarea>
 </div>
