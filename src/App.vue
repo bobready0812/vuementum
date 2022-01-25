@@ -402,4 +402,10 @@ export default {
 .shutdown {
   margin:0;
 }
+.todo {
+  border-radius: 5px;
+  width:400px;
+  height: 30px;
+  color:
+}
 </style>
