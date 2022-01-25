@@ -423,7 +423,7 @@ export default {
   padding-left: 8px;
 }
 .todo::placeholder {
-  color:#2c3e50;
+  color:rgb(78, 78, 78)
 }
 .todo:focus {
   outline: none;
