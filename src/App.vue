@@ -51,6 +51,7 @@
     <span>{{day.weather[0].main}}</span><br>
     <span>{{(((day.temp.min) + (day.temp.max)) /2).toFixed(1)}}</span>
   </div>
+  
 </div>
 <!-- 검색폼 -->
 <div class="searchDiv">
@@ -60,11 +61,10 @@
  </div>
 <!-- 날씨 배경 -->
 <img :src="require(`./images/${img}.jpg`)">
-<h1 @click="NoteTextHide" v-bind:class="{ hide : NoteTextHidden}">노트</h1>
-<div v-bind:class="{ hide : NoteHidden}" class="note">
-  <h6 @click="NoteHide" class="shutdown">노트 닫기</h6>
+<div class="note">
   <textarea v-model="noteValue" class="noteinput">
 </textarea>
+<button @click="saveNote">저장</button>
 </div>
 <!-- 북마크  폼-->
 <form @submit="bookmarkAdd">
@@ -113,8 +113,6 @@ export default {
     city: "", // 사용자의 위치
     weather:"", //일주일 날씨 데이터를 담는 부분
     img: "nothing", //이미지 소스
-    NoteTextHidden:false, //노트 버튼 초기 보여줌
-    NoteHidden:true, //노트 초기 숨겨짐
     noteValue:"", //노트에 쓴 내용
     linkValue:"", //북마크 링크
     explainValue: "", //북마크 설명
@@ -230,23 +228,19 @@ export default {
       
     }); 
     }, 
+     getDate() {
+    const weeks = ["일", "월", "화", "수" , "목" , "금", "토"];
+    const day = new Date();  
+    const date = day.getDay();
+    console.log(weeks[date]);
+      
+    },
    
     //날씨가 호출되지 않았을때 실행되는 함수
     weatherError() {
       alert("No location found!");
     },
-    //노트 버튼 클릭시 노트를 보여주는 함수
-    NoteTextHide() {
-       this.NoteTextHidden = true;
-       this.NoteHidden = false;
-    },
-    //닫기 버튼 클릭시 노트 버튼을 보여주는 함수
-    NoteHide() {
-      this.NoteTextHidden = false;
-      this.NoteHidden = true;
-      localStorage.setItem('note', this.noteValue);
-    
-    },
+   
     //스토레지에서 미리 작성된 노트의 내용을 가져와주는 함수
     getNote() {
       this.noteValue = localStorage.getItem('note');
@@ -285,14 +279,13 @@ export default {
     showSearch() {
       this.searchHidden = !this.searchHidden;
     },
-    getDate() {
-    const weeks = ["일", "월", "화", "수" , "목" , "금", "토"];
-    const day = new Date();  
-    const date = day.getDay();
-    console.log(weeks[date]);
-      
+    saveNote() {
+      if(this.noteValue !== null) {
+        localStorage.setItem('note', this.noteValue) 
+      } else {
+        return;
+      }
     }
-
   
     
   },
@@ -444,6 +437,10 @@ export default {
 }
 .todoDiv::-webkit-scrollbar {
   display: none;
+}
+.bmListDiv1 {
+  overflow: scroll;
+  width: 640px;
 }
 
 
