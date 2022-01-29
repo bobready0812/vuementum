@@ -33,7 +33,8 @@
 <!-- todo -->
 <div class="todoDiv">
 <ul>
-  <li v-for="todo in todos" :key="todo.id" :id="todo.id" >
+  <li  class="todoLi" v-for="todo in todos" :key="todo.id" :id="todo.id" >
+    <input type="checkbox">
     <span> {{todo.text}} </span> 
     <button @click="todoDelete">삭제</button> 
   </li>
@@ -61,6 +62,7 @@
  </div>
 <!-- 날씨 배경 -->
 <img :src="require(`./images/${img}.jpg`)">
+<!-- 노트 -->
 <div class="note">
   <textarea v-model="noteValue" class="noteinput">
 </textarea>
@@ -172,7 +174,7 @@ export default {
        }
       this.todos.push(todo);
       this.todoText = ""; 
-      this.saveTodos();
+      this.todoSave();
      },
      //투두 삭제
      todoDelete(e) {
@@ -441,6 +443,9 @@ export default {
 .bmListDiv1 {
   overflow: scroll;
   width: 640px;
+}
+.todoLi {
+  background-color: palegreen;
 }
 
 
